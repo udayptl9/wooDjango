@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }}</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    form {
+        width: 60%;
+        margin: 0 auto;
+        margin-top: 50px;
+    }
+
+    form label, form input {
+        width: 100%
+    }
+
+    form label {
+        font-weight: bold;
+    }
+
+    form input {
+        height: 30px;
+        padding: 5px;
+    }
+
+    form div {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    form button {
+        padding: 5px;
+        background: rgb(50, 88, 11);
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .button {
+        padding: 5px;
+        background: orange;
+        border: none;
+        text-decoration: none;
+        color: black;
+    }
+
+    form button:hover {
+        background: rgb(110, 165, 55);
+    }
+</style>
+<body>
+    <form action="{% url 'product_update' product.id %}" method="POST">
+        <h3>Update Product: {{ product.name }}</h3><br>
+        <a href="/" class="button">Go Back</a>
+        {% csrf_token %}
+        <div>
+            <label for="id">ID</label>
+            <input id="id" type="text" value="{{ product.id }}" disabled>
+        </div>
+        <div>
+            <label for="name">Name</label>
+            <input disabled name="product_name" id="name" type="text" value="{{ product.name }}">
+        </div>
+        <div>
+            <label for="price">Price</label>
+            <input disabled name="price" id="price" type="number" value="{{ product.price }}">
+        </div>
+        <div>
+            <label for="price">Regular Price</label>
+            <input name="price" id="price" type="number" value="{{ product.regular_price }}">
+        </div>
+        <div>
+            <label for="quantity">Quanlity</label>
+            <input name="stock_quantity" type="number" value="{{ product.stock_quantity }}">
+        </div>
+        <button type="submit">Update Product</button>
+    </form>
+</body>
+</html>

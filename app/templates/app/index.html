@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+</head>
+<style>
+.search {
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+.search input {
+    width: 45%;
+    height: 20px;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.search button {
+    margin-left: 10px;
+    padding: 10px;
+    border: none;
+    background: palegreen;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    overflow: auto;
+}
+.container {
+    overflow: auto;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+</style>
+<body>
+    <div class="search">
+        <form action="{% url 'products' %}" method="GET">
+            <input name="search" type="text" placeholder="search" value="{{ request.GET.search }}"><input type="text" placeholder="per page" value="{{ request.GET.per_page }}" name="per_page"><button>Filter</button>
+        </form><br>
+    </div>
+    <div class="products">
+        {% if products %}
+            <table>
+                <tr>
+                <th>Sl No.</th>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Product Regular_Price</th>
+                <th>Product Quantity</th>
+                </tr>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ product.id }}</td>
+                        <td><a class="video_link" href="{% url 'product_update' product.id %}" style="text-decoration: none;">{{ product.name }}</a></td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.regular_price }}</td>
+                        <td>{{ product.stock_quantity }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h3>No Products</h3>
+        {% endif %}
+    </div>
+</body>
+</html>
